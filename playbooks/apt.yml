@@ -1,0 +1,14 @@
+- hosts: "proxmox"
+  become: no
+  tasks:
+    - name: apt
+      apt:
+        update_cache: yes
+        upgrade: 'yes'
+- hosts: "k3s"
+  become: yes
+  tasks:
+    - name: apt
+      apt:
+        update_cache: yes
+        upgrade: 'yes'
