@@ -1,0 +1,24 @@
+- name: Setup Dev System
+  hosts: "dev"
+  become: yes
+  tasks:
+    - name: 'Download and add Google Cloud public signing key'
+      apt_key:
+        url: https://packages.cloud.google.com/apt/doc/apt-key.gpg
+        state: present
+    - name: 'Add Kubernetes Repository'
+      apt_repository:
+        repo: deb https://apt.kubernetes.io/ kubernetes-xenial main
+        state: present
+    - name: Update cache
+      apt:
+        update_cache: yes
+        upgrade: 'yes'
+    - name: Install packages
+      apt:
+        name: "{{ packages }}"
+        state: present
+      vars:
+        packages:
+          - nfs-common
+          - kubectl
