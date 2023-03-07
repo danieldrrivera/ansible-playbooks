@@ -8,13 +8,6 @@
     - name: 'Add Kubernetes Repository'
       apt_repository:
         repo: deb https://apt.kubernetes.io/ kubernetes-xenial main
-    # - name: Gather the package facts
-    #   ansible.builtin.package_facts:
-    #     manager: auto
-    # - name: Check whether a package called kubectl is installed
-    #   ansible.builtin.debug:
-    #     msg: "{{ ansible_facts.packages['kubectl'] | length }} versions of kubectl are installed!"
-    #   when: "'kubectl' in ansible_facts.packages"
     - name: 'Install kubectl'
       apt:
         name: kubectl
