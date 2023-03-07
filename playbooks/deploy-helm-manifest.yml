@@ -1,0 +1,8 @@
+- name: Deploy Helm manifest files
+  hosts: master
+  become: yes
+  tasks:
+    - name: Copy Helm Manifest file
+      copy:
+        src: nfs.yml
+        dest: /var/lib/rancher/k3s/server/manifests/nfs.yaml
