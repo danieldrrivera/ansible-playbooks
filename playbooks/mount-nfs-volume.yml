@@ -1,0 +1,11 @@
+- name: Mount an NFS volume
+  hosts: node
+  become: yes
+  tasks:
+    - name: Mount TrueNAS Core NFS share
+      ansible.posix.mount:
+        src: 192.168.11.221:/mnt/Storage0/nas
+        path: /mnt/nas
+        opts: rw,sync,hard
+        state: mounted
+        fstype: nfs
