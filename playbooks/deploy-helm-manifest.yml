@@ -4,5 +4,5 @@
   tasks:
     - name: Copy Helm Manifest file
       copy:
-        src: nfs.yml
-        dest: /var/lib/rancher/k3s/server/manifests/nfs.yaml
+        src: k3s-nfs-storageclass.yaml
+        dest: /var/lib/rancher/k3s/server/manifests/k3s-nfs-storageclass.yaml
