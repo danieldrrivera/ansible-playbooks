@@ -5,12 +5,14 @@
     - name: Create directories
       ansible.builtin.file:
         path: "{{ item }}"
+        owner: serveradmin
+        group: serveradmin
         state: directory
         mode: '0755'
       loop:
-        - /srv/apps/sonarr
-        - /srv/apps/radarr
-        - /srv/apps/sabnzbd
+        - /mnt/apps/sonarr
+        - /mnt/apps/radarr
+        - /mnt/apps/sabnzbd
     - name: Mount TrueNAS Core NFS share
       ansible.posix.mount:
         src: 192.168.11.221:/mnt/Storage0/nas
