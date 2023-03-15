@@ -1,16 +1,16 @@
 - name: Update Proxmox
   hosts: proxmox
-  become: no
+  become: false
   tasks:
-    - name: apt
-      apt:
-        update_cache: yes
-        upgrade: yes
-- name: Update Linux Systems
+    - name: Update/Upgrade Proxmox cache
+      ansible.builtin.apt:
+        update_cache: true
+        upgrade: true
+- name: Update/Upgrade K3S Cluster
   hosts: k3s_cluster
-  become: yes
+  become: true
   tasks:
     - name: apt
-      apt:
-        update_cache: yes
-        upgrade: yes
+      ansible.builtin.apt:
+        update_cache: true
+        upgrade: true

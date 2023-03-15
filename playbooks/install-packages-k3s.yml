@@ -1,13 +1,13 @@
 - name: Install additonal Packages on K3S servers
   hosts: k3s_cluster
-  become: yes
+  become: true
   tasks:
     - name: Update cache
-      apt:
-        update_cache: yes
-        upgrade: 'yes'
+      ansible.builtin.apt_repository:
+        update_cache: true
+        upgrade: true
     - name: Install packages on K3S servers
-      apt:
+      ansible.builtin.apt_repository:
         name: "{{ packages }}"
         state: present
       vars:

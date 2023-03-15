@@ -1,8 +1,9 @@
 - name: Deploy Helm manifest files
   hosts: master
-  become: yes
+  become: true
   tasks:
     - name: Copy Helm Manifest file
-      copy:
+      ansible.builtin.copy:
         src: k3s-nfs-storageclass.yaml
         dest: /var/lib/rancher/k3s/server/manifests/k3s-nfs-storageclass.yaml
+        mode: '0755'
