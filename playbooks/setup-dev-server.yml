@@ -2,24 +2,32 @@
   hosts: "dev"
   become: true
   tasks:
-    - name: 'Download and add Google Cloud public signing key'
+    - name: Download and add Google Cloud public signing key
       ansible.builtin.apt_key:
         url: https://packages.cloud.google.com/apt/doc/apt-key.gpg
         state: present
-    - name: 'Add Kubernetes Repository'
+    - name: Add Kubernetes repository
       ansible.builtin.apt_repository:
         repo: deb https://apt.kubernetes.io/ kubernetes-xenial main
         state: present
-    - name: Update cache
-      ansible.builtin.apt_repository:
         update_cache: true
-        upgrade: true
+    - name: Update epository caches
+      ansible.builtin.apt:
+        update_cache: true
     - name: Install packages
-      ansible.builtin.apt_repository:
+      ansible.builtin.apt:
         name: "{{ packages }}"
         state: present
+        update_cache: true
       vars:
         packages:
           - nfs-common
           - kubectl
           - ansible-lint
+    - name: Copy tmux conf file
+      ansible.builtin.copy:
+        src: tmux.conf
+        dest: /home/serveradmin/.tmux.conf
+        owner: serveradmin
+        group: serveradmin
+        mode: '0644'
