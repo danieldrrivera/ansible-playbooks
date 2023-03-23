@@ -14,3 +14,11 @@
       ansible.builtin.apt:
         update_cache: true
         upgrade: true
+- name: Update/Upgrade Dev
+  hosts: dev
+  become: true
+  tasks:
+    - name: apt
+      ansible.builtin.apt:
+        update_cache: true
+        upgrade: true
