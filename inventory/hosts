@@ -21,3 +21,13 @@ node
 [ans_targets]
 ans01
 ans02
+
+[db_and_web_server1]
+ans01
+
+[db_and_web_server2]
+ans02
+
+[db_and_web_servers:children]
+db_and_web_server1
+db_and_web_server2
