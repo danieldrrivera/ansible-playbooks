@@ -1,0 +1,59 @@
+- name: Deploy a web application
+  hosts: db_and_web_servers
+  become: true
+  tasks:
+    - name: Install all required dependencies
+      ansible.builtin.apt:
+        name: "{{ packages }}"
+        state: present
+        update_cache: true
+      vars:
+        packages:
+          - python3
+          - python-setuptools
+          - python3-dev
+          - build-essential
+          - python-pip
+    - name: Install MySQL database
+      ansible.builtin.apt:
+        name: "{{ packages }}"
+        state: present
+        update_cache: true
+      vars:
+        packages:
+          - mysql-server
+          - mysql-client
+    - name: Start MySQL service
+      ansible.builtin.svc:
+        name: mysql
+        state: started
+        enabled: true
+    - name: Create Application database
+      ansible.builtin.mysql_db:
+        name: employee_db
+        state: present
+    - name: Create Database User
+      ansible.builtin.mysql_user:
+        name: db_user
+        password: Passw0rd
+        priv: '*.*:ALL'
+        state: present
+    - name: Install Python Flask Dependencies
+      ansible.builtin.pip:
+        name: "{{ packages }}"
+        state: present
+        update_cache: true
+      vars:
+        packages:
+          - flask
+          - flask-mysql
+    - name: Copy source code
+      ansible.builtin.copy:
+        src: app.py
+        dest: /opt/app.py
+        owner: serveradmin
+        group: serveradmin
+        mode: '0644'
+    - name: Start Web Server
+      ansible.builtin.shell:
+        cmd: FLASK_APP=/opt/app.py nohup flask run --host=0.0.0.0 &
